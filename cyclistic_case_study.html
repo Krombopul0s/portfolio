@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Timothy LaRoy Jr." />
+
+
+<title>Cyclistic Case Study Markdown</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Cyclistic Case Study Markdown</h1>
+<h4 class="author">Timothy LaRoy Jr.</h4>
+<h4 class="date">July 2022</h4>
+
+</div>
+
+
+<div id="about-cyclistic" class="section level2">
+<h2>About Cyclistic</h2>
+<p>Divvy is a bikeshare system encompassing Chicago and Evanston,
+Illinois and a program of the Chicago Department of Transportation
+(CDOT). More information about the program can be found <a
+href="https://ride.divvybikes.com/about">here</a>.</p>
+<p><a href="https://ride.divvybikes.com/pricing">Membership pricing</a>:
+* Annual memberships are $9 per month – provide unlimited 45-min
+rides</p>
+<pre><code>* Single Rides are $3.30 per trip
+
+* Day passes are $15 for unlimted 3-hour rides in a 24-hour period</code></pre>
+</div>
+<div id="business-task" class="section level2">
+<h2>Business Task</h2>
+<p>Using the notion that annual members are more profitable than casual
+riders, our task is to find out how these two populations use Cyclistic
+in an effort to guide marketing to optimize conversion from casual to
+annual membership.</p>
+</div>
+<div id="data-sources" class="section level2">
+<h2>Data Sources</h2>
+<p>The Data was pulled from a public <a
+href="https://divvy-tripdata.s3.amazonaws.com/index.html">database</a>
+provided by the City of Chicago’s Divvy bicycle sharing service in
+partnership with Bikeshare (Lyft Bikes and Scooters, LLC). The license
+provides for access, reproduction, analyzing, copying, modifying, and
+distributing for any lawful purpose. These files were downloaded and
+their trip data files extracted to a folder called “trip_data” within my
+cyclistic_case_study folder. Legitimacy of the data does not seem to be
+a concern as it was provided by the City and Company so it is firsthand.
+Data was current as this is a continuously updated resources and
+contained data up to the date of this writing.</p>
+<p>Some short comings of the data are that they are incomplete when
+viewed together. As described below, documentation formats change
+throughout years so while some years have demographic information, other
+do not. Another major shortcoming is the lack of user id as a variable.
+Without this information it is hard to identify user habits and compare
+casual riders to annual subscribers because we do not know who is
+who.</p>
+</div>
+<div id="cleaning" class="section level2">
+<h2>Cleaning</h2>
+<p>I loaded in multiple packages in order to perform functions as well
+as set the appropriate working directory for where the files were
+saved.</p>
+<pre class="r"><code>library(tidyverse)
+library(&quot;dplyr&quot;)
+library(&quot;purrr&quot;)
+library(&quot;lubridate&quot;)
+library(&quot;ggplot2&quot;)
+library(&quot;magrittr&quot;)
+library(&quot;spatialrisk&quot;)
+library(&quot;scales&quot;)
+library(&quot;rmarkdown&quot;)</code></pre>
+<p>I then imported the files for 2021 into one data frame to work with
+and save for future use. I found the station information for Divvy
+stations but I used excel to open that file. It was mainly used to
+determine validity of station id’s and find the higher numerical
+station_id before naming conventions changed.</p>
+<pre class="r"><code>setwd(&quot;C:\\Users\\Timla\\Documents\\r_portfolio\\cyclistic_markdown\\cyclistic_data_files\\2021_data&quot;)
+files &lt;- list.files()
+trips &lt;- map_dfr(files, read_csv)</code></pre>
+<p>I converted the station ids to numeric from character. Converted the
+lat-long data to distance, and added the day of the week to the
+date.</p>
+<pre class="r"><code>#convert ids to numeric
+trips$start_station_id &lt;- as.numeric(trips$start_station_id)
+trips$end_station_id &lt;- as.numeric(trips$end_station_id)
+
+#convert lat-long to distance
+trips &lt;- trips %&gt;%
+  mutate(trips, distance = spatialrisk::haversine(trips$start_lat, trips$start_lng, trips$end_lat, trips$end_lng))
+
+#add day of the week
+trips$day &lt;- weekdays(as.Date(trips$started_at))</code></pre>
+<p>I removed the columns I wasn’t initially interested in in order to
+work with a smaller data frame and attempt to save as much data as
+possible when I remove the NA values. After dropping NA values we lost
+about 60% of our data which is substantial. This wasn’t necessarily a
+surprise though considering the inconsistencies in the data and the
+large number of NA values spread throughout.</p>
+<pre class="r"><code>trips_subset &lt;- subset(trips, select = c(ride_id, started_at, day, start_station_id, distance, member_casual))
+
+trips_clean &lt;- drop_na(trips_subset)</code></pre>
+<p>##Analyze and visualize</p>
+<p>I had some questions I wanted to start looking at which is what I did
+below. I initially though that there would be differences between our
+users when it came to <em>when</em> they were using our bikes. As I
+suspected, annual members are likely using our bikes more throughout the
+week as a means of commuting compared to our casual riders who are
+likely using them on the weekends to just get around.</p>
+<pre class="r"><code>ggplot(data = trips) + 
+  geom_bar(mapping = aes(x = factor(day, levels = c(&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Thursday&quot;, &quot;Friday&quot;, &quot;Saturday&quot;, &quot;Sunday&quot;)), fill = member_casual), position = &quot;dodge&quot;) +
+  theme(axis.text.x = element_text(angle = 45)) +
+  scale_y_continuous(label = comma)</code></pre>
+<p><img src="cyclistic_case_study_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Looking at the graph, we can see that there are more annual members
+using our bikes during the week compared to the casual members on the
+weekend.</p>
+<p>Next, I looked at the station ID compared to the membership type and
+trips length. This was a little harder to analyze give then
+inconsistencies in the data, but I believe there is significant results
+from it. I removed data from stations above 762 for this portion
+because, while this severely limits the number of data points, there was
+a very clear numbering convention being used up until a certain point.
+Low station ID’s are primarily focused around downtown in the “touristy”
+parts of Chicago while larger numbers began to sprawl out into the
+suburbs. This can be seen clearly in the images here:</p>
+<p>image: <img src="cyclistic_images/station_ids_0_100.jpg"
+alt="Station ID’s 0-100" /> image: <img
+src="cyclistic_images/station_ids_350_650.jpg"
+alt="Station ID’s 350-650" /></p>
+<p>Finally, I looked at station ID vs the length of trip and station ID
+vs membership type. I hypothesized that if we could see that longer
+distance trips were being taken, and that these trips were often coming
+from these higher numbered stations, we might also see a higher number
+of annual members in these trips.</p>
+<pre class="r"><code>#start station vs membership
+trips_by_id &lt;- subset(trips_clean, start_station_id &lt; 762)
+
+ggplot(data = trips_by_id) + geom_bar(mapping = aes(x =
+start_station_id, fill=member_casual), position = &quot;dodge&quot;)</code></pre>
+<p><img src="cyclistic_case_study_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>##length of trip vs station_id 
+ggplot(data = trips_by_id) +
+geom_point(mapping = aes(x = start_station_id, y = distance))</code></pre>
+<p><img src="cyclistic_case_study_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<p>We can see in the bar chart that as the station number goes up, so
+too does the number of annual members in proportion to casual members
+(we are seeing more blue than orange). In lower station ID’s., it looks
+more orange than blue. We can also see that as the station number gets
+higher, the distances traveled trend upward in the scatter plot with the
+lower stations reaching up to about 15 kilometer (15,000 meters/9 miles)
+at the longest and 30 kilometers (30,000 meters/18 miles) for the higher
+stations. This helps support the notion that the lower station ids that
+are primarily located downtown are associated with shorter trips.
+Conversely, higher station ID’s are located further out and are
+typically associated with longer trips.</p>
+</div>
+<div id="conclusions" class="section level2">
+<h2>Conclusions</h2>
+<p>Given the data that we had to work with, I attempted to find answers
+to how different users were using our bikes. I found that there is an
+association between weekday, station, and membership types. My
+recommendations would be as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p>Most importantly, to get a good grasp on what our users are
+doing, we need to identify them in some way in the data. We can maintain
+security of personal identifying information, but we need to be able to
+identify what trips are being taken by what users. This would
+drastically improve the analysis process for this data and
+task.</p></li>
+<li><p>Given weekday trips are predominantly annual members, casual
+members who regular ride on the weekdays or that could be identifies as
+commuters, would be a good target of marketing an annual
+membership.</p></li>
+<li><p>Riders that have longer trips and/or have a tendency to take
+bikes from more suburban stations my be willing to convert to an annual
+membership.</p></li>
+</ol>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
