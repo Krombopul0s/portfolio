@@ -99,7 +99,7 @@ hr {
           box-sizing: content-box;
 }
 pre {
-  overflow: auto;
+  overflow: scroll;
 }
 code,
 kbd,
